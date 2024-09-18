@@ -1,4 +1,4 @@
-﻿namespace Device.Lamp.Models;
+﻿namespace Device.Lamp.MVVM.Models;
 
 public class ResponseResult<T>
 {

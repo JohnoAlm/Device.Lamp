@@ -1,4 +1,4 @@
-﻿using Device.Lamp.Models;
+﻿using Device.Lamp.MVVM.Models;
 
 namespace Device.Lamp.Services;
 

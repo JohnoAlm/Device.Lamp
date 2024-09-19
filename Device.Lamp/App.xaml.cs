@@ -1,4 +1,6 @@
-﻿using Device.Lamp.Services;
+﻿using Device.Lamp.MVVM.ViewModels;
+using Device.Lamp.MVVM.Views;
+using Device.Lamp.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Windows;
@@ -13,10 +15,16 @@ public partial class App : Application
     {
         _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
         {
-
             //services.AddSingleton<IDeviceManager>(new DeviceManager(""));
 
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<MainWindowModel>();
+
+            services.AddSingleton<HomeView>();
+            services.AddSingleton<HomeViewModel>();
+
+            services.AddSingleton<SettingsView>();
+            services.AddSingleton<SettingsViewModel>();
 
         }).Build();
     }

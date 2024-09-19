@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources\Fonts.xaml"/>
+                <ResourceDictionary Source="MVVM\Routing.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         

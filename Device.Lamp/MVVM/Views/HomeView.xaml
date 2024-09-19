@@ -4,9 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Device.Lamp.MVVM.Views"
+             
+             xmlns:viewmodels="clr-namespace:Device.Lamp.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
+             
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="300">
     <Grid>
-        <TextBlock Text="Home"/>
+        <StackPanel>
+            <TextBlock Text="{Binding PageTitle, FallbackValue=Page Title}"/>
+            <Button Command="{Binding NavigateToSettingsCommand}" Content="Settings" HorizontalAlignment="Left" />
+        </StackPanel>
     </Grid>
 </UserControl>

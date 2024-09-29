@@ -9,8 +9,27 @@
         d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowModel}"
         
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
         Title="MainWindow" Height="450" Width="300">
-    <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}" />
-    </Grid>
+
+    <Border Background="#122538" CornerRadius="30">
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Border Grid.Row="0" Name="TopWindowBar" MouseLeftButtonDown="TopWindowBar_MouseLeftButtonDown" Background="#122538" CornerRadius="30 30 0 0" Height="30" />
+            <Button Grid.Row="1" Style="{StaticResource power-btn}" Command="{Binding CloseAppCommand}" Margin="20 0" HorizontalAlignment="Right" />
+            <ContentControl Grid.Row="2" Content="{Binding CurrentViewModel}" />
+
+        </Grid>
+        
+    </Border>
+    
 </Window>

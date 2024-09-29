@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Device.Lamp.MVVM.ViewModels;
@@ -15,4 +16,10 @@ public partial class MainWindowModel : ObservableObject
 
     [ObservableProperty]
     private ObservableObject _currentViewModel;
+
+    [RelayCommand]
+    private void CloseApp()
+    {
+        Environment.Exit(0);
+    }
 }

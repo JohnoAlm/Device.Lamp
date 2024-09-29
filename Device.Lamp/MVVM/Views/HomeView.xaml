@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Device.Lamp.MVVM.Views"
-             Background="White"
+             Background="Transparent"
              xmlns:viewmodels="clr-namespace:Device.Lamp.MVVM.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
              
@@ -17,7 +17,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
                
-        <!--<TextBlock Text="{Binding PageTitle, FallbackValue=Page Title}"/>-->
+        <TextBlock Text="{Binding PageTitle, FallbackValue=Page Title}" Style="{StaticResource pageTitle}" HorizontalAlignment="Center"/>
         <Button Grid.Row="1" Style="{StaticResource menu-btn}" Command="{Binding NavigateToSettingsCommand}" Content="&#xf013;" HorizontalAlignment="Right" />
         
     </Grid>

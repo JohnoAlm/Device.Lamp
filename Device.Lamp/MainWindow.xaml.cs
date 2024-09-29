@@ -10,4 +10,9 @@ public partial class MainWindow : Window
         InitializeComponent();
         DataContext = viewModel;    
     }
+
+    private void TopWindowBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        DragMove();
+    }
 }

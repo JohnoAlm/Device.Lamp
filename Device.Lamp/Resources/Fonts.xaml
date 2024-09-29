@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <FontFamily x:Key="fa-solid">Fonts\fa-solid-900.ttf#Font Awesome 6 Free Solid</FontFamily>
+    <FontFamily x:Key="fa-regular">Fonts\fa-regular-400.ttf#Font Awesome 6 Free Regular</FontFamily>
     
     <FontFamily x:Key="opensans-bold">Fonts\OpenSans-Bold.ttf#Open Sans</FontFamily>
     <FontFamily x:Key="opensans-light">Fonts\OpenSans-Light.ttf#Open Sans Light</FontFamily>

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Device.Lamp.MVVM.ViewModels;
+using System.Windows.Controls;
 
 namespace Device.Lamp.MVVM.Views;
 

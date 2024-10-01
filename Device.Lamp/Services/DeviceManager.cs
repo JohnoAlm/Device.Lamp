@@ -33,11 +33,11 @@ public class DeviceManager : IDeviceManager
         }
         catch (OperationCanceledException)
         {
-            return new ResponseResult<string> { Succeeded = false, ErrorMessage = "Operation was cancelled." };
+            return new ResponseResult<string> { Succeeded = false, Message = "Operation was cancelled." };
         }
         catch (Exception ex)
         {
-            return new ResponseResult<string> { Succeeded = false, ErrorMessage = ex.Message };
+            return new ResponseResult<string> { Succeeded = false, Message = ex.Message };
         }
     }
 }

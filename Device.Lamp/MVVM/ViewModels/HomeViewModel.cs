@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Device.Lamp.Handlers;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 using System.Windows.Media;
 
 namespace Device.Lamp.MVVM.ViewModels;
@@ -21,10 +23,12 @@ public partial class HomeViewModel : ObservableObject
         _isLampOn = false;
     }
 
-    [RelayCommand]
-    private void ToggleLamp()
+    public void OnDeviceStateChanged(bool deviceState)
     {
-        IsLampOn = !IsLampOn;
+        if (!deviceState)
+            IsLampOn = false;
+        else
+            IsLampOn = true;
     }
 
     [RelayCommand]

@@ -33,13 +33,13 @@
                 FontSize="120" Foreground="White" 
                 Margin="0 50" Visibility="{Binding IsLampOn, Converter={StaticResource CustomBooleanVisibilityConverter}, ConverterParameter=Reverse}"               
                 HorizontalAlignment="Center"/>
-
+        
         <TextBlock Grid.Row="1" x:Name="lampOn"
                    Text="&#xf0eb;" FontFamily="{StaticResource fa-solid}" 
                    FontSize="120" Foreground="Yellow" 
                    Margin="0 50" Visibility="{Binding IsLampOn, Converter={StaticResource CustomBooleanVisibilityConverter}}"     
                    HorizontalAlignment="Center"/>
-
+        
         <Button Grid.Row="2" Style="{StaticResource menu-btn}" Command="{Binding NavigateToSettingsCommand}" Content="&#xf013;" HorizontalAlignment="Right" />
         
     </Grid>

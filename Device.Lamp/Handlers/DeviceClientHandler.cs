@@ -8,27 +8,30 @@ namespace Device.Lamp.Handlers;
 
 public class DeviceClientHandler
 {
-    private readonly IotDevice _iotDevice = new();
+    public IotDevice IotDevice { get; private set; } = new();
     private DeviceClient? _deviceClient;
 
     public DeviceClientHandler(string deviceId, string deviceType)
     {
-        _iotDevice!.DeviceId = deviceId;
-        _iotDevice.DeviceType = deviceType;
+        IotDevice!.DeviceId = deviceId;
+        IotDevice.DeviceType = deviceType;
+        IotDevice.ConnectionString = "HostName=OliverA-IoTHub.azure-devices.net;DeviceId=2bea2269-c1da-4d95-87c3-89af0592f5c3;SharedAccessKey=Zed1Ti0EoIKyGz8quLC2surDhEfYHqL3SnYqURJjkD0=";
     }
 
-    public async Task<ResponseResult<string>> InitializeAsync()
+    public  ResponseResult<string> Initialize()
     {
         var responseResult = new ResponseResult<string>();
 
         try
         {
-            _deviceClient = DeviceClient.CreateFromConnectionString(_iotDevice.ConnectionString);
+            _deviceClient = DeviceClient.CreateFromConnectionString(IotDevice.ConnectionString);
 
             if (_deviceClient != null)
             {
-                await _deviceClient.SetMethodDefaultHandlerAsync(DirectMethodDefaultCallback, null);
-                await UpdateDeviceTwinPropertiesAsync();
+                Task.WhenAll(
+                    _deviceClient.SetMethodDefaultHandlerAsync(DirectMethodDefaultCallback, null),
+                    UpdateDeviceTwinPropertiesAsync()
+                );
 
                 responseResult.Succeeded = true;
                 responseResult.Message = "Device initialized.";
@@ -39,7 +42,7 @@ public class DeviceClientHandler
                 responseResult.Message = "Device client not found.";
             }
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             responseResult.Succeeded = false;
             responseResult.Message = ex.Message;
@@ -62,9 +65,9 @@ public class DeviceClientHandler
 
     public async Task<MethodResponse> TurnOnAsync()
     {
-        _iotDevice.DeviceState = true;
+        IotDevice.DeviceState = true;
         var result = await UpdateDeviceTwinPropertiesAsync();
-        if(result.Succeeded)
+        if (result.Succeeded)
             return CreateMethodResponse("DeviceState changed to on", 200);
         else
             return CreateMethodResponse($"{result.Message}", 400);
@@ -72,7 +75,7 @@ public class DeviceClientHandler
 
     public async Task<MethodResponse> TurnOffAsync()
     {
-        _iotDevice.DeviceState = false;
+        IotDevice.DeviceState = false;
         var result = await UpdateDeviceTwinPropertiesAsync();
         if (result.Succeeded)
             return CreateMethodResponse("DeviceState changed to off", 200);
@@ -88,7 +91,7 @@ public class DeviceClientHandler
             var methodResponse = new MethodResponse(Encoding.UTF8.GetBytes(json), statusCode);
             return methodResponse;
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             var json = JsonConvert.SerializeObject(new { Message = ex.Message });
             var methodResponse = new MethodResponse(Encoding.UTF8.GetBytes(json), statusCode);
@@ -104,9 +107,9 @@ public class DeviceClientHandler
         {
             var reportedProperties = new TwinCollection
             {
-                ["connectionState"] = _iotDevice.ConnectionState,
-                ["deviceType"] = _iotDevice.DeviceType,
-                ["deviceState"] = _iotDevice.DeviceState
+                ["connectionState"] = IotDevice.ConnectionState,
+                ["deviceType"] = IotDevice.DeviceType,
+                ["deviceState"] = IotDevice.DeviceState
 
             };
 

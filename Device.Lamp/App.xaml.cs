@@ -59,6 +59,14 @@ public partial class App : Application
         
         try
         {
+            var deviceClientHandler = _host!.Services.GetRequiredService<DeviceClientHandler>();
+
+            AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+            {
+                var result = deviceClientHandler.Disconnect();
+                Debug.WriteLine(result.Message);
+            };
+
             await _host!.StopAsync(cts.Token);
         }
         catch { }
@@ -66,3 +74,5 @@ public partial class App : Application
         base.OnExit(e);
     }
 }
+
+

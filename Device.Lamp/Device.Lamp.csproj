@@ -49,4 +49,12 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MVVM\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IotDeviceResources\IotDeviceResources.csproj" />
+  </ItemGroup>
+
 </Project>

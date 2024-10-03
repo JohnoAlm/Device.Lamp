@@ -1,6 +1,6 @@
-﻿using Device.Lamp.Handlers;
-using Device.Lamp.MVVM.ViewModels;
+﻿using Device.Lamp.MVVM.ViewModels;
 using Device.Lamp.MVVM.Views;
+using IotDeviceResources.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics;

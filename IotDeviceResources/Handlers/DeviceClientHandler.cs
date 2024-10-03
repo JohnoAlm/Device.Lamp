@@ -1,10 +1,10 @@
-﻿using Device.Lamp.MVVM.Models;
+﻿using IotDeviceResources.Models;
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Shared;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Device.Lamp.Handlers;
+namespace IotDeviceResources.Handlers;
 
 public class DeviceClientHandler
 {
@@ -18,9 +18,9 @@ public class DeviceClientHandler
         IotDevice.ConnectionString = "HostName=OliverA-IoTHub.azure-devices.net;DeviceId=2bea2269-c1da-4d95-87c3-89af0592f5c3;SharedAccessKey=Zed1Ti0EoIKyGz8quLC2surDhEfYHqL3SnYqURJjkD0=";
     }
 
-    public  ResponseResult<string> Initialize()
+    public ResponseResult Initialize()
     {
-        var responseResult = new ResponseResult<string>();
+        var responseResult = new ResponseResult();
 
         try
         {
@@ -53,10 +53,10 @@ public class DeviceClientHandler
         return responseResult;
     }
 
-    public ResponseResult<string> Disconnect()
+    public ResponseResult Disconnect()
     {
-        var response = new ResponseResult<string>();
-       
+        var response = new ResponseResult();
+
         try
         {
             IotDevice.DeviceState = false;
@@ -123,9 +123,9 @@ public class DeviceClientHandler
         }
     }
 
-    public async Task<ResponseResult<string>> UpdateDeviceTwinPropertiesAsync()
+    public async Task<ResponseResult> UpdateDeviceTwinPropertiesAsync()
     {
-        var responseResult = new ResponseResult<string>();
+        var responseResult = new ResponseResult();
 
         try
         {
@@ -158,9 +158,9 @@ public class DeviceClientHandler
     }
 
 
-    public async Task<ResponseResult<string>> UpdateDeviceTwinConnectionStateAsync(bool connectionState)
+    public async Task<ResponseResult> UpdateDeviceTwinConnectionStateAsync(bool connectionState)
     {
-        var responseResult = new ResponseResult<string>();
+        var responseResult = new ResponseResult();
 
         try
         {
@@ -198,6 +198,6 @@ public class DeviceClientHandler
 
         else if (status == ConnectionStatus.Connected)
             Task.Run(() => UpdateDeviceTwinConnectionStateAsync(true));
-       
+
     }
 }

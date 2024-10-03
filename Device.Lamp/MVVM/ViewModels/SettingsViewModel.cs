@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Device.Lamp.Handlers;
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics;
 
 namespace Device.Lamp.MVVM.ViewModels;
 

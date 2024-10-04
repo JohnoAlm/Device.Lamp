@@ -13,7 +13,7 @@
              d:DesignHeight="450" d:DesignWidth="300">
 
     <UserControl.Resources>
-        <conv:CustomBooleanToVisibilityConverter x:Key="CustomBooleanVisibilityConverter" />
+        <conv:CustomBooleanToVisibilityConverter x:Key="CustomBooleanToVisibilityConverter" />
     </UserControl.Resources>
     
 
@@ -31,13 +31,13 @@
         <TextBlock Grid.Row="1" x:Name="lampOff"
                 Text="&#xf0eb;" FontFamily="{StaticResource fa-regular}" 
                 FontSize="120" Foreground="White" 
-                Margin="0 50" Visibility="{Binding IsLampOn, Converter={StaticResource CustomBooleanVisibilityConverter}, ConverterParameter=Reverse}"               
+                Margin="0 50" Visibility="{Binding IsLampOn, Converter={StaticResource CustomBooleanToVisibilityConverter}, ConverterParameter=Reverse}"               
                 HorizontalAlignment="Center"/>
         
         <TextBlock Grid.Row="1" x:Name="lampOn"
                    Text="&#xf0eb;" FontFamily="{StaticResource fa-solid}" 
                    FontSize="120" Foreground="Yellow" 
-                   Margin="0 50" Visibility="{Binding IsLampOn, Converter={StaticResource CustomBooleanVisibilityConverter}}"     
+                   Margin="0 50" Visibility="{Binding IsLampOn, Converter={StaticResource CustomBooleanToVisibilityConverter}}"     
                    HorizontalAlignment="Center"/>
         
         <Button Grid.Row="2" Style="{StaticResource menu-btn}" Command="{Binding NavigateToSettingsCommand}" Content="&#xf013;" HorizontalAlignment="Right" />

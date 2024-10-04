@@ -6,13 +6,10 @@ namespace Device.Lamp;
 
 public partial class MainWindow : Window
 {
-    private readonly IDatabaseContext _contex;
-
-    public MainWindow(MainWindowModel viewModel, IDatabaseContext contex)
+    public MainWindow(MainWindowModel viewModel)
     {
         InitializeComponent();
         DataContext = viewModel;
-        _contex = contex;
     }
 
     private void TopWindowBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

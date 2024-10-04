@@ -34,11 +34,11 @@ public partial class App : Application
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<MainWindowModel>();
 
-                services.AddSingleton<HomeView>();
-                services.AddSingleton<HomeViewModel>();
+                services.AddTransient<HomeView>();
+                services.AddTransient<HomeViewModel>();
 
-                services.AddSingleton<SettingsView>();
-                services.AddSingleton<SettingsViewModel>();
+                services.AddTransient<SettingsView>();
+                services.AddTransient<SettingsViewModel>();
 
             }).Build();
     }

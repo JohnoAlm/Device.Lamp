@@ -1,8 +1,10 @@
 ﻿using Device.Lamp.MVVM.ViewModels;
 using Device.Lamp.MVVM.Views;
+using IotDeviceResources.Data;
 using IotDeviceResources.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Windows;
 
@@ -14,42 +16,55 @@ public partial class App : Application
 
     public App()
     {
-        _host = Host.CreateDefaultBuilder().ConfigureServices(services =>
-        {
-            services.AddSingleton(new DeviceClientHandler("2bea2269-c1da-4d95-87c3-89af0592f5c3", "lamp"));
+        _host = Host.CreateDefaultBuilder()
+       
+            .ConfigureServices(services =>
+            {
+                services.AddLogging();
 
-            services.AddSingleton<MainWindow>();
-            services.AddSingleton<MainWindowModel>();
+                services.AddSingleton<IDatabaseContext>(sp =>
+                {
+                    var logger = sp.GetRequiredService<ILogger<SqliteContext>>();
+                    var directoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                    return new SqliteContext(logger, () => directoryPath);
+                });
 
-            services.AddSingleton<HomeView>();
-            services.AddSingleton<HomeViewModel>();
+                services.AddSingleton(new DeviceClientHandler("2bea2269-c1da-4d95-87c3-89af0592f5c3", "lamp"));
 
-            services.AddSingleton<SettingsView>();
-            services.AddSingleton<SettingsViewModel>();
+                services.AddSingleton<MainWindow>();
+                services.AddSingleton<MainWindowModel>();
 
-        }).Build();
+                services.AddSingleton<HomeView>();
+                services.AddSingleton<HomeViewModel>();
+
+                services.AddSingleton<SettingsView>();
+                services.AddSingleton<SettingsViewModel>();
+
+            }).Build();
     }
 
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
-        base.OnStartup(e);
-
-        var mainWindow = _host!.Services.GetRequiredService<MainWindow>();
-        mainWindow.Show();
-
-        var deviceClientHandler = _host!.Services.GetRequiredService<DeviceClientHandler>();
-
-        var homeViewModel = _host!.Services.GetRequiredService<HomeViewModel>();
-
         using var cts = new CancellationTokenSource();
+
         try
         {
+            await _host!.StartAsync(cts.Token);
+
+            var mainWindow = _host!.Services.GetRequiredService<MainWindow>();
+            var deviceClientHandler = _host!.Services.GetRequiredService<DeviceClientHandler>();
+            var homeViewModel = _host!.Services.GetRequiredService<HomeViewModel>();
+            
+            mainWindow.Show();
+
             var result = deviceClientHandler.Initialize();
             Debug.WriteLine(result.Message);
 
             deviceClientHandler.IotDevice.DeviceStateChanged += homeViewModel.OnDeviceStateChanged;
         }
-        catch { }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
+        base.OnStartup(e);
     }
 
     protected override async void OnExit(ExitEventArgs e)
@@ -68,7 +83,7 @@ public partial class App : Application
 
             await _host!.StopAsync(cts.Token);
         }
-        catch { }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
         base.OnExit(e);
     }

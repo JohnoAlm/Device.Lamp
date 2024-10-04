@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IotDeviceResources.Models;
 
-public class IotDeviceEntity
+public class IotDeviceSettings
 {
     [Key]
     [PrimaryKey]

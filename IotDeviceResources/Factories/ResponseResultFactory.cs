@@ -4,7 +4,7 @@ namespace IotDeviceResources.Factories;
 
 public static class ResponseResultFactory
 {
-    public static ResponseResult Succeeded(string? message)
+    public static ResponseResult Succeeded(string message)
     {
         return new ResponseResult
         {
@@ -13,7 +13,7 @@ public static class ResponseResultFactory
         };
     }
 
-    public static ResponseResult Failed(string? message)
+    public static ResponseResult Failed(string message)
     {
         return new ResponseResult
         {
@@ -25,7 +25,25 @@ public static class ResponseResultFactory
 
 public static class ResponseResultFactory<T>
 {
-    public static ResponseResult<T> Succeeded(string? message, T? content)
+    public static ResponseResult<T> Succeeded(string message = default!)
+    {
+        return new ResponseResult<T>
+        {
+            Succeeded = true,
+            Message = message,
+        };
+    }
+
+    public static ResponseResult<T> Failed(string message = default!)
+    {
+        return new ResponseResult<T>
+        {
+            Succeeded = false,
+            Message = message,
+        };
+    }
+
+    public static ResponseResult<T> Succeeded(string message = default!, T content = default!)
     {
         return new ResponseResult<T>
         {
@@ -35,7 +53,7 @@ public static class ResponseResultFactory<T>
         };
     }
 
-    public static ResponseResult<T> Failed(string? message, T? content)
+    public static ResponseResult<T> Failed(string message = default!, T content = default!)
     {
         return new ResponseResult<T>
         {

@@ -4,7 +4,7 @@ namespace IotDeviceResources.Data;
 
 public interface IDatabaseContext
 {
-    Task<ResponseResult<IotDeviceEntity>> GetSettingsAsync();
+    Task<ResponseResult<IotDeviceSettings>> GetSettingsAsync();
     Task<ResponseResult> ResetSettingsAsync();
-    Task<ResponseResult> SaveSettingsAsync(IotDeviceEntity iotDeviceEntity);
+    Task<ResponseResult> SaveSettingsAsync(IotDeviceSettings iotDeviceEntity);
 }

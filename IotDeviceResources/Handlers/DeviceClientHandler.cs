@@ -60,7 +60,7 @@ public class DeviceClientHandler
         try
         {
             IotDevice.DeviceState = false;
-            Task.Run(UpdateDeviceTwinPropertiesAsync);
+            Task.Run(UpdateDeviceTwinDeviceStateAsync);
             UpdateDeviceTwinConnectionStateAsync(false).Wait();
 
             response.Succeeded = true;
@@ -90,7 +90,7 @@ public class DeviceClientHandler
     public async Task<MethodResponse> TurnOnAsync()
     {
         IotDevice.DeviceState = true;
-        var result = await UpdateDeviceTwinPropertiesAsync();
+        var result = await UpdateDeviceTwinDeviceStateAsync();
         if (result.Succeeded)
             return CreateMethodResponse("DeviceState changed to on", 200);
         else
@@ -100,7 +100,7 @@ public class DeviceClientHandler
     public async Task<MethodResponse> TurnOffAsync()
     {
         IotDevice.DeviceState = false;
-        var result = await UpdateDeviceTwinPropertiesAsync();
+        var result = await UpdateDeviceTwinDeviceStateAsync();
         if (result.Succeeded)
             return CreateMethodResponse("DeviceState changed to off", 200);
         else
@@ -121,6 +121,37 @@ public class DeviceClientHandler
             var methodResponse = new MethodResponse(Encoding.UTF8.GetBytes(json), statusCode);
             return methodResponse;
         }
+    }
+
+    public async Task<ResponseResult> UpdateDeviceTwinDeviceStateAsync()
+    {
+        var responseResult = new ResponseResult();
+
+        try
+        {
+            var reportedProperties = new TwinCollection
+            {
+                ["deviceState"] = IotDevice.DeviceState
+            };
+
+            if (_deviceClient != null)
+            {
+                await _deviceClient.UpdateReportedPropertiesAsync(reportedProperties);
+                responseResult.Succeeded = true;
+            }
+            else
+            {
+                responseResult.Succeeded = false;
+                responseResult.Message = "Device client not found.";
+            }
+        }
+        catch (Exception ex)
+        {
+            responseResult.Succeeded = false;
+            responseResult.Message = ex.Message;
+        }
+
+        return responseResult;
     }
 
     public async Task<ResponseResult> UpdateDeviceTwinPropertiesAsync()
@@ -157,7 +188,6 @@ public class DeviceClientHandler
         return responseResult;
     }
 
-
     public async Task<ResponseResult> UpdateDeviceTwinConnectionStateAsync(bool connectionState)
     {
         var responseResult = new ResponseResult();
@@ -190,14 +220,17 @@ public class DeviceClientHandler
         return responseResult;
     }
 
-
     public void ConnectionStatusChangeHandler(ConnectionStatus status, ConnectionStatusChangeReason reason)
     {
         if (status == ConnectionStatus.Disconnected || status == ConnectionStatus.Disabled)
+        {
             Task.Run(() => UpdateDeviceTwinConnectionStateAsync(false));
+        }
 
         else if (status == ConnectionStatus.Connected)
+        {
             Task.Run(() => UpdateDeviceTwinConnectionStateAsync(true));
+        }
 
     }
 }

@@ -9,14 +9,14 @@ public partial class MainWindowModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
 
+    [ObservableProperty]
+    private ObservableObject _currentViewModel;
+
     public MainWindowModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         CurrentViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
     }
-
-    [ObservableProperty]
-    private ObservableObject _currentViewModel;
 
     [RelayCommand]
     private void CloseApp()

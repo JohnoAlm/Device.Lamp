@@ -34,29 +34,29 @@ public partial class App : Application
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<MainWindowModel>();
 
-                services.AddTransient<HomeView>();
-                services.AddTransient<HomeViewModel>();
+                services.AddSingleton<HomeView>();
+                services.AddSingleton<HomeViewModel>();
 
-                services.AddTransient<SettingsView>();
-                services.AddTransient<SettingsViewModel>();
+                services.AddSingleton<SettingsView>();
+                services.AddSingleton<SettingsViewModel>();
 
             }).Build();
     }
 
-    protected override async void OnStartup(StartupEventArgs e)
+    protected override void OnStartup(StartupEventArgs e)
     {
+        base.OnStartup(e);
+
+        var mainWindow = _host!.Services.GetRequiredService<MainWindow>();
+        mainWindow.Show();
+
+        var deviceClientHandler = _host!.Services.GetRequiredService<DeviceClientHandler>();
+        var homeViewModel = _host!.Services.GetRequiredService<HomeViewModel>();
+
         using var cts = new CancellationTokenSource();
 
         try
         {
-            await _host!.StartAsync(cts.Token);
-
-            var mainWindow = _host!.Services.GetRequiredService<MainWindow>();
-            var deviceClientHandler = _host!.Services.GetRequiredService<DeviceClientHandler>();
-            var homeViewModel = _host!.Services.GetRequiredService<HomeViewModel>();
-            
-            mainWindow.Show();
-
             var result = deviceClientHandler.Initialize();
             Debug.WriteLine(result.Message);
 
@@ -64,17 +64,16 @@ public partial class App : Application
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
 
-        base.OnStartup(e);
     }
 
     protected override async void OnExit(ExitEventArgs e)
     {
+        var deviceClientHandler = _host!.Services.GetRequiredService<DeviceClientHandler>();
+
         using var cts = new CancellationTokenSource();
-        
+
         try
         {
-            var deviceClientHandler = _host!.Services.GetRequiredService<DeviceClientHandler>();
-
             AppDomain.CurrentDomain.ProcessExit += (s, e) =>
             {
                 var result = deviceClientHandler.Disconnect();

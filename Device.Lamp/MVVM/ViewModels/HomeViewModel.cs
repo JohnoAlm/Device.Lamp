@@ -21,7 +21,7 @@ public partial class HomeViewModel : ObservableObject
     }
 
     public void OnDeviceStateChanged(bool deviceState)
-    {
+    {  
         if (!deviceState)
             IsLampOn = false;
         else

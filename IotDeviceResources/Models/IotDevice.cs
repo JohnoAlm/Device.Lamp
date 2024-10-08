@@ -6,6 +6,7 @@ public class IotDevice
     public bool ConnectionState { get; set; }
 
     public string DeviceId { get; set; } = null!;
+    public string? DeviceName { get; set; }
     public string? DeviceType { get; set; }
 
     public event Action<bool>? DeviceStateChanged;

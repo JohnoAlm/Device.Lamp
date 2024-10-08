@@ -11,9 +11,10 @@ public class DeviceClientHandler
     public IotDevice IotDevice { get; private set; } = new();
     private DeviceClient? _deviceClient;
 
-    public DeviceClientHandler(string deviceId, string deviceType)
+    public DeviceClientHandler(string deviceId, string deviceName, string deviceType)
     {
         IotDevice!.DeviceId = deviceId;
+        IotDevice.DeviceName = deviceName;
         IotDevice.DeviceType = deviceType;
         IotDevice.ConnectionString = "HostName=OliverA-IoTHub.azure-devices.net;DeviceId=2bea2269-c1da-4d95-87c3-89af0592f5c3;SharedAccessKey=Zed1Ti0EoIKyGz8quLC2surDhEfYHqL3SnYqURJjkD0=";
     }
@@ -163,6 +164,7 @@ public class DeviceClientHandler
             var reportedProperties = new TwinCollection
             {
                 ["connectionState"] = true,
+                ["deviceName"] = IotDevice.DeviceName,
                 ["deviceType"] = IotDevice.DeviceType,
                 ["deviceState"] = IotDevice.DeviceState
 

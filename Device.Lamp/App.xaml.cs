@@ -29,7 +29,7 @@ public partial class App : Application
                     return new SqliteContext(logger, () => directoryPath);
                 });
 
-                services.AddSingleton(new DeviceClientHandler("2bea2269-c1da-4d95-87c3-89af0592f5c3", "lamp"));
+                services.AddSingleton(new DeviceClientHandler("2bea2269-c1da-4d95-87c3-89af0592f5c3", "LEDBulb", "lamp"));
 
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<MainWindowModel>();

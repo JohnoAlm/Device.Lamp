@@ -88,6 +88,7 @@ public class SqliteContext : IDatabaseContext
 
                 if (response.Content != null)
                 {
+                    response.Content.Name = iotDeviceSettings.Name;
                     response.Content.ConnectionString = iotDeviceSettings.ConnectionString; 
                     response.Content.Type = iotDeviceSettings.Type;
 

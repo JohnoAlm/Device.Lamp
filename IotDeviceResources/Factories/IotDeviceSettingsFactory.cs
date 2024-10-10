@@ -20,11 +20,12 @@ public static class IotDeviceSettingsFactory
         };
     }
 
-    public static IotDeviceSettings Create(string id, string? type, string? connectionString)
+    public static IotDeviceSettings Create(string id, string? name, string? type, string? connectionString)
     {
         return new IotDeviceSettings()
         {
             Id = id,
+            Name = name,
             Type = type,
             ConnectionString = connectionString 
         };

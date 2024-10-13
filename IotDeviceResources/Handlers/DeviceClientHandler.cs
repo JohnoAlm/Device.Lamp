@@ -1,4 +1,5 @@
-﻿using IotDeviceResources.Models;
+﻿using IotDeviceResources.Data;
+using IotDeviceResources.Models;
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Shared;
 using Newtonsoft.Json;
@@ -8,20 +9,18 @@ namespace IotDeviceResources.Handlers;
 
 public class DeviceClientHandler
 {
-    public IotDevice IotDevice { get; private set; } = new();
     private DeviceClient? _deviceClient;
 
-    public DeviceClientHandler(string deviceId, string deviceName, string deviceType)
+    public IotDevice IotDevice { get; private set; } = new();
+
+    public ResponseResult Initialize(string deviceId, string deviceName, string deviceType, string connectionString)
     {
+        var responseResult = new ResponseResult();
+      
         IotDevice!.DeviceId = deviceId;
         IotDevice.DeviceName = deviceName;
         IotDevice.DeviceType = deviceType;
-        IotDevice.ConnectionString = "HostName=OliverA-IoTHub.azure-devices.net;DeviceId=2bea2269-c1da-4d95-87c3-89af0592f5c3;SharedAccessKey=Zed1Ti0EoIKyGz8quLC2surDhEfYHqL3SnYqURJjkD0=";
-    }
-
-    public ResponseResult Initialize()
-    {
-        var responseResult = new ResponseResult();
+        IotDevice.ConnectionString = connectionString;
 
         try
         {

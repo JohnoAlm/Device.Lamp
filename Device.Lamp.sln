@@ -5,7 +5,9 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.Lamp", "Device.Lamp\Device.Lamp.csproj", "{2C142112-0B99-4B39-8B76-C99B655ECBC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IotDeviceResources", "IotDeviceResources\IotDeviceResources.csproj", "{44479310-EC18-41AD-8D16-ED7F3D864703}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotDeviceResources", "IotDeviceResources\IotDeviceResources.csproj", "{44479310-EC18-41AD-8D16-ED7F3D864703}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions", "AzureFunctions\AzureFunctions.csproj", "{5F1D4A43-C022-4FDE-9822-DF434999FF01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{44479310-EC18-41AD-8D16-ED7F3D864703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44479310-EC18-41AD-8D16-ED7F3D864703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44479310-EC18-41AD-8D16-ED7F3D864703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F1D4A43-C022-4FDE-9822-DF434999FF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F1D4A43-C022-4FDE-9822-DF434999FF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F1D4A43-C022-4FDE-9822-DF434999FF01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F1D4A43-C022-4FDE-9822-DF434999FF01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

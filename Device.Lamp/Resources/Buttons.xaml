@@ -34,6 +34,37 @@
         
     </Style>
     
+    <Style x:Key="configure-btn" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource opensans-regular}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Background" Value="#FF9800" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="5" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="5" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FFBB54" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#F57C00" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+    
     <Style x:Key="menu-btn" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#FF9800" />
@@ -41,5 +72,6 @@
         <Setter Property="FontSize" Value="22" />
         <Setter Property="BorderThickness" Value="0" />
     </Style>
-    
+
+
 </ResourceDictionary>

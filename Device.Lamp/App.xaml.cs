@@ -29,7 +29,8 @@ public partial class App : Application
                     return new SqliteContext(logger, () => directoryPath);
                 });
 
-                services.AddSingleton(new DeviceClientHandler("2bea2269-c1da-4d95-87c3-89af0592f5c3", "LEDBulb", "lamp"));
+                services.AddSingleton<DeviceClientHandler>();
+                services.AddTransient<DeviceRegistrationHandler>();
 
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<MainWindowModel>();
@@ -43,13 +44,14 @@ public partial class App : Application
             }).Build();
     }
 
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
         var mainWindow = _host!.Services.GetRequiredService<MainWindow>();
         mainWindow.Show();
 
+        var context = _host!.Services.GetRequiredService<IDatabaseContext>();
         var deviceClientHandler = _host!.Services.GetRequiredService<DeviceClientHandler>();
         var homeViewModel = _host!.Services.GetRequiredService<HomeViewModel>();
 
@@ -57,8 +59,22 @@ public partial class App : Application
 
         try
         {
-            var result = deviceClientHandler.Initialize();
-            Debug.WriteLine(result.Message);
+            var response = await context.GetSettingsAsync();
+
+            if(response.Succeeded && response.Content != null)
+            {
+                if(string.IsNullOrEmpty(response.Content.Id) || string.IsNullOrEmpty(response.Content.Name) || string.IsNullOrEmpty(response.Content.Type) || string.IsNullOrEmpty(response.Content.ConnectionString))
+                    Debug.WriteLine("Could not retrieve all device properties.");        
+                else
+                {
+                    var result = deviceClientHandler.Initialize(response.Content.Id, response.Content.Name, response.Content.Type, response.Content.ConnectionString);
+                    Debug.WriteLine(result.Message);
+                }
+            }
+            else
+            {
+                Debug.WriteLine(response.Message);
+            }
 
             deviceClientHandler.IotDevice.DeviceStateChanged += homeViewModel.OnDeviceStateChanged;
         }

@@ -29,14 +29,14 @@
         <StackPanel Grid.Row="1">
             <StackPanel>
                 <TextBlock Text="Device Id:" Margin="0, 5" Foreground="White"/>
-                <TextBox Text="{Binding DeviceId}" />
+                <TextBox Text="{Binding DeviceId}" Style="{StaticResource inputField}" />
             </StackPanel>
 
             <TextBlock Text="Device Name:" Margin="0, 5" Foreground="White" />
-            <TextBox  Text="{Binding DeviceName}" />
+            <TextBox Text="{Binding DeviceName}" Style="{StaticResource inputField}" />
 
             <TextBlock Text="Device Type:" Margin="0, 5" Foreground="White" />
-            <TextBox Text="{Binding DeviceType}" />
+            <TextBox Text="{Binding DeviceType}" Style="{StaticResource inputField}" />
 
             <TextBlock Text="{Binding ErrorText}" Margin="0, 5" Foreground="Red" />
 
@@ -53,7 +53,7 @@
                     Command="{Binding ResetSettingsCommand}" 
                     Margin="0, 5"
                     HorizontalAlignment="Center"
-                    Padding="28, 10"/>
+                    Padding="30, 10"/>
         
             <TextBlock Text="{Binding IsConfigured, Converter={StaticResource CustomBooleanToStringConverter}}" Foreground="White" FontFamily="{StaticResource opensans-light}" FontSize="16" HorizontalAlignment="Center" Margin="0, 10" />
         </StackPanel>

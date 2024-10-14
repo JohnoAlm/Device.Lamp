@@ -6,5 +6,13 @@
         <Setter Property="FontSize" Value="36" />
         <Setter Property="Foreground" Value="White" />
     </Style>
+
+    <Style x:Key="inputField" TargetType="TextBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="BorderBrush" Value="#FFFFFF" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CaretBrush" Value="#FFFFFF" />
+    </Style>
         
 </ResourceDictionary>
